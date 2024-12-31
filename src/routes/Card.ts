@@ -19,8 +19,18 @@ CardRoute.get("/artist/:artistId", async (c) => {
   if (!artistId) {
     return c.text("No artistId provided");
   }
-  const artist = await spotifyApi.getArtistAlbums(artistId);
+  const artist = await spotifyApi.getArtist(artistId);
   return c.json(artist);
+});
+
+CardRoute.get("/artist/:artistId/albums", async (c) => {
+    const spotifyApi = new SpotifyClientBuilder(c.env).withAnonymousAuth().build();
+    const artistId = c.req.param("artistId");
+    if (!artistId) {
+      return c.text("No artistId provided");
+    }
+    const albums = await spotifyApi.getArtistAlbums(artistId);
+    return c.json(albums);
 });
 
 CardRoute.get("/album/:albumId", async (c) => {
