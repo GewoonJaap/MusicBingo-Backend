@@ -1,0 +1,43 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Build & Style Check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: "src"
+# setup yarn
+    - name: Setup Yarn
+      run: npm install -g yarn
+      working-directory: ./src
+# install dependencies
+    - name: Install Dependencies
+      run: yarn install
+      working-directory: ./src
+# build
+    - name: Build
+      run: yarn build
+      working-directory: ./src
+# formatting check
+    - name: Formatting Check
+      run: yarn format:check
+      working-directory: ./src

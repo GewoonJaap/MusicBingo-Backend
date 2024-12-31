@@ -1,2 +1,8 @@
-# MusicBingo-Backend
- Music Bingo Backend
+```
+npm install
+npm run dev
+```
+
+```
+npm run deploy
+```
