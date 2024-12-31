@@ -4,7 +4,8 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
     "format": "prettier --write src",
-    "format:check": "prettier --check src"
+    "format:check": "prettier --check src",
+    "build": "wrangler deploy --dry-run --outdir=dist"
   },
   "dependencies": {
     "@spotify/web-api-ts-sdk": "^1.2.0",
